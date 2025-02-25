@@ -7,6 +7,7 @@ function ReviewForm() {
     title: "",
     rating: 0,
     content: "",
+    imgFile: null,
   });
 
   const handleChange = (name, value) => {
