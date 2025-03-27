@@ -1,14 +1,14 @@
-import { useState } from "react";
-// import { createReview } from "../api";
-import FileInput from "./FileInput";
-import RatingInput from "./RatingInput";
-import "./ReviewForm.css";
-import useAsync from "../hooks/useAsync.js";
+import { useState } from 'react';
+import useAsync from '../hooks/useAsync';
+import useTranslate from '../hooks/useTranslate';
+import FileInput from './FileInput';
+import RatingInput from './RatingInput';
+import './ReviewForm.css';
 
 const INITIAL_VALUES = {
-  title: "",
+  title: '',
   rating: 0,
-  content: "",
+  content: '',
   imgFile: null,
 };
 
@@ -19,6 +19,7 @@ function ReviewForm({
   onSubmit,
   onSubmitSuccess,
 }) {
+  const t = useTranslate();
   const [values, setValues] = useState(initialValues);
   const [isSubmitting, submittingError, onSubmitAsync] = useAsync(onSubmit);
 
@@ -37,10 +38,11 @@ function ReviewForm({
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append("title", values.title);
-    formData.append("rating", values.rating);
-    formData.append("content", values.content);
-    formData.append("imgFile", values.imgFile);
+    formData.append('title', values.title);
+    formData.append('rating', values.rating);
+    formData.append('content', values.content);
+    formData.append('imgFile', values.imgFile);
+
     const result = await onSubmitAsync(formData);
     if (!result) return;
 
@@ -68,9 +70,9 @@ function ReviewForm({
         value={values.content}
         onChange={handleInputChange}
       />
-      {onCancel && <button onClick={onCancel}>취소</button>}
+      {onCancel && <button onClick={onCancel}>{t('cancel button')}</button>}
       <button disabled={isSubmitting} type="submit">
-        확인
+        {t('confirm button')}
       </button>
       {submittingError && <div>{submittingError.message}</div>}
     </form>
